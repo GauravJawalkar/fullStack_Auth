@@ -74,6 +74,11 @@ function Login() {
                   />
                 </div>
               </div>
+              <div>
+                <Link href={'/forgotpassword'}
+                  className="ring-1 ring-neutral-600 px-4 py-[6px] rounded transition-all ease-in-out duration-200 hover:bg-[#1a1a1a]"
+                >Forgot Password?</Link>
+              </div>
             </div>
           </div>
           <button

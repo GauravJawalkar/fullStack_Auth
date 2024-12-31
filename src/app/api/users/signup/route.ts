@@ -2,6 +2,7 @@ import { connect } from "@/dbConfig/dbConfig";
 import { User } from "@/models/userModel";
 import { NextResponse, NextRequest } from "next/server";
 import bcryptjs from "bcryptjs";
+import { sendEmail } from "@/helpers/mailer";
 
 // connecting to the database
 connect();
@@ -45,6 +46,8 @@ export async function POST(request: NextRequest) {
         if (!registeredUser) {
             return NextResponse.json({ error: "Failed to register the user" }, { status: 500 })
         }
+
+        await sendEmail({ email, emailType: "VERIFY", userId: registeredUser._id })
 
         return NextResponse.json(
             {
