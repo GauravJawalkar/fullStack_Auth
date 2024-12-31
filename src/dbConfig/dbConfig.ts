@@ -13,10 +13,8 @@ export async function connect() {
       console.log(
         "Mongo Db connection error , Check the connection to mongodb : ", err
       );
-      process.exit();
+      process.exit(1);
     });
-
-    console.log(connection);
   } catch (error) {
     console.log("Error Connecting the database", error);
   }

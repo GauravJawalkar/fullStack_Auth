@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 
 function Signup() {
-
-
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -16,7 +14,6 @@ function Signup() {
 
   const [disabled, setDisabled] = useState(true)
   const [loading, setLoading] = useState(false)
-
   const router = useRouter();
 
   useEffect(() => {
@@ -36,28 +33,21 @@ function Signup() {
 
     try {
       setLoading(true);
-
+      // posting the data through the api by axios sending the user object from useState
       const response = await axios.post('/api/users/signup', user);
-
       console.log("Signup success", response.data);
-
       router.push('/login');
-
-
     } catch (error: any) {
-
       console.log("Error signign up : ", error.message);
-
     } finally {
       setLoading(false)
     }
-
   };
 
   return (
     <section>
       <div className="flex items-center justify-center flex-col min-h-screen text-2xl ">
-        <div className="my-5">{loading ? "Processing..." : "Signup With Your Account"}</div>
+        <div className="my-5">Signup With Your Account</div>
         <div className="my-3 text-base min-w-[400px] ring-1 ring-neutral-600 rounded-md ">
           <div className="px-8 py-9">
             <div className="my-4">
@@ -112,10 +102,10 @@ function Signup() {
         </div>
         <button
           type="button"
-          className={`text-base bg-black text-white ring-1 ring-neutral-600 px-6 py-2 rounded hover:bg-[#1a1a1a] hover:ring-[#1a1a1a] transition-all ease-linear duration-200 my-4  ${disabled ? "cursor-not-allowed" : "cursor-pointer"} ${loading ? "cursor-not-allowed" : "cursor-pointer"}`}
+          className={`text-base bg-black text-white ring-1 ring-neutral-600 px-6 py-2 rounded hover:bg-[#1a1a1a] transition-all ease-linear duration-200 my-4  ${disabled ? "cursor-not-allowed" : "cursor-pointer"} ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`}
           onClick={onSignup}
         >
-          Sign Up
+          {loading ? "Processing..." : "Sign Up"}
         </button>
         <div>
           <h2 className="text-base">Already Have An Account ? {" "}<Link className="text-blue-500 hover:text-blue-700" href={'/login'}>Login</Link> </h2>
