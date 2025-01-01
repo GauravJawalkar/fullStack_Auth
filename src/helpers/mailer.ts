@@ -3,6 +3,9 @@ import { User } from '@/models/userModel'
 import nodemailer from 'nodemailer'
 
 export async function sendEmail({ email, emailType, userId }: any) {
+
+    const confPassNumber = Math.floor(Math.random() * 9000 + 1000);
+
     try {
         // Create a hashed Token
         const hashedToken = await bcryptjs.hash(userId.toString(), 10);
@@ -23,7 +26,7 @@ export async function sendEmail({ email, emailType, userId }: any) {
             await User.findByIdAndUpdate(userId,
                 {
                     $set: {
-                        forgotPasswordToken: hashedToken,
+                        forgotPasswordToken: confPassNumber,
                         forgotPasswordTokenExpiry: Date.now() + 3600000
                     }
                 },
@@ -48,7 +51,15 @@ export async function sendEmail({ email, emailType, userId }: any) {
             from: 'gauravjawalkar8@gmail.com',
             to: email,
             subject: emailType === "VERIFY" ? "Verify your email" : "Reset Your Password",
-            html: `<p> Click <a href="${process.env.domain}/verifyemail?token=${hashedToken}">here</a> to ${emailType === "VERIFY" ? "verify your email" : "reset your password"}</p>`
+            html: `<p> 
+            Click 
+            <a href="${process.env.domain}/verifyemail?token=${hashedToken}">
+            here
+            </a>
+            to 
+            ${emailType === "VERIFY" ? "verify your email" : "Nothing"}
+            ${emailType === "RESET" ? `Your 4 digit code to reset the password ${confPassNumber}` : "Nothing"}
+            </p>`
         }
 
         const mailResponse = await transport.sendMail(mailOptions);

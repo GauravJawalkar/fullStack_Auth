@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function Login() {
   const [user, setUser] = useState({
@@ -24,13 +25,38 @@ function Login() {
   }, [user])
 
 
+
   const onLogin = async () => {
     try {
       setLogging(true)
       const response = await axios.post('/api/users/login', user)
       console.log("Logged In : ", response)
+      if (!response) {
+        toast.error("Check Your Credentials.", {
+          style: {
+            borderRadius: '4px',
+            background: '#333',
+            color: '#fff',
+          }
+        })
+      } else {
+        toast.success('Logged In', {
+          style: {
+            borderRadius: '4px',
+            background: '#333',
+            color: '#fff',
+          }
+        })
+      }
       router.push(`/profile`)
     } catch (error: any) {
+      toast.error("Check Your Credentials.", {
+        style: {
+          borderRadius: '4px',
+          background: '#333',
+          color: '#fff',
+        }
+      })
       console.log("Failed to log you in", error.message)
     } finally {
       setLogging(false)

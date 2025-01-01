@@ -3,6 +3,7 @@ import { User } from "@/models/userModel";
 import { connect } from "@/dbConfig/dbConfig";
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken'
+import { sendEmail } from "@/helpers/mailer";
 
 // Connect to the database
 connect();
@@ -11,12 +12,19 @@ export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
 
-        const { email, password } = reqBody;
+        const { email, password, forgotPass } = reqBody;
+
 
         const existingUser = await User.findOne({ email });
 
         if (!existingUser) {
             return NextResponse.json({ error: "User does not exists" }, { status: 400 })
+        }
+
+        if (forgotPass) {
+            console.log("yo eamil send")
+            await sendEmail({ email, emailType: "RESET", userId: existingUser._id });
+            console.log("Email send sucess")
         }
 
         // Checking if the password id correct

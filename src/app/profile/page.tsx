@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 function Profile() {
     const router = useRouter();
@@ -12,10 +13,24 @@ function Profile() {
         try {
             const logout = await axios("/api/users/logout");
             if (logout) {
-                console.log("Logged out successfully : ", logout);
+                // console.log("Logged out successfully : ", logout);
+                toast.success('Logged Out Successfully', {
+                    style: {
+                        borderRadius: '4px',
+                        background: '#333',
+                        color: '#fff',
+                    }
+                })
             }
             router.push("/login");
         } catch (error: any) {
+            toast.error('Failed to logout', {
+                style: {
+                    borderRadius: '4px',
+                    background: '#333',
+                    color: '#fff',
+                }
+            })
             console.error("Failed to logout : ", error.message);
         }
     };

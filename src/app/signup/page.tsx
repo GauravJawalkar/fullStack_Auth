@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function Signup() {
   const [user, setUser] = useState({
@@ -36,8 +37,33 @@ function Signup() {
       // posting the data through the api by axios sending the user object from useState
       const response = await axios.post('/api/users/signup', user);
       console.log("Signup success", response.data);
+
+      if (!response) {
+        toast.error("Unable to get you onboard", {
+          style: {
+            borderRadius: '4px',
+            background: '#333',
+            color: '#fff',
+          }
+        })
+      } else {
+        toast.success('Welcome Onboard', {
+          style: {
+            borderRadius: '4px',
+            background: '#333',
+            color: '#fff',
+          }
+        })
+      }
       router.push('/login');
     } catch (error: any) {
+      toast.error('Error while Onboarding ', {
+        style: {
+          borderRadius: '4px',
+          background: '#333',
+          color: '#fff',
+        }
+      })
       console.log("Error signign up : ", error.message);
     } finally {
       setLoading(false)
