@@ -1,3 +1,5 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 import { NextRequest, NextResponse } from "next/server";
 import { getTokenData } from "@/helpers/getTokenData";
 import { User } from "@/models/userModel";
