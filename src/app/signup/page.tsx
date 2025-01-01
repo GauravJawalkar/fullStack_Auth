@@ -7,6 +7,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 function Signup() {
+  const router = useRouter();
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -15,7 +16,6 @@ function Signup() {
 
   const [disabled, setDisabled] = useState(true)
   const [loading, setLoading] = useState(false)
-  const router = useRouter();
 
   useEffect(() => {
     if (user.username.length > 2 && user.email.length > 2 && user.password.length > 2) {
