@@ -74,7 +74,7 @@ function Signup() {
     <section>
       <div className="flex items-center justify-center flex-col min-h-screen text-2xl ">
         <div className="my-5">Signup With Your Account</div>
-        <div className="my-3 text-base min-w-[400px] ring-1 ring-neutral-600 rounded-md ">
+        <div className="my-3 text-base min-w-[400px] max-sm:min-w-fit ring-1 ring-neutral-600 rounded-md ">
           <div className="px-8 py-9">
             <div className="my-4">
               <label htmlFor="username">Username : </label>
